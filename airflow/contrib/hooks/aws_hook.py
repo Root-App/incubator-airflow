@@ -137,3 +137,19 @@ class AwsHook(BaseHook):
             aws_secret_access_key=aws_secret_access_key,
             endpoint_url=endpoint_url
         )
+
+    def get_session(self, region_name=None):
+        """Get the underlying boto3.session."""
+        session, _ = self._get_credentials(region_name)
+        return session
+
+    def get_credentials(self, region_name=None):
+        """Get the underlying `botocore.Credentials` object.
+
+        This contains the attributes: access_key, secret_key and token.
+        """
+        session, _ = self._get_credentials(region_name)
+        # Credentials are refreshable, so accessing your access key / secret key
+        # separately can lead to a race condition.
+        # See https://stackoverflow.com/a/36291428/8283373
+        return session.get_credentials().get_frozen_credentials()
