@@ -989,8 +989,11 @@ class TaskInstance(Base, LoggingMixin):
     @property
     def log_url(self):
         iso = self.execution_date.isoformat()
-        BASE_URL = configuration.get('webserver', 'BASE_URL')
-        return BASE_URL + (
+
+        # https://issues.apache.org/jira/browse/AIRFLOW-1061
+        # BASE_URL = configuration.get('webserver', 'BASE_URL')
+
+        return (
             "/admin/airflow/log"
             "?dag_id={self.dag_id}"
             "&task_id={self.task_id}"
@@ -1000,8 +1003,11 @@ class TaskInstance(Base, LoggingMixin):
     @property
     def mark_success_url(self):
         iso = self.execution_date.isoformat()
-        BASE_URL = configuration.get('webserver', 'BASE_URL')
-        return BASE_URL + (
+
+        # https://issues.apache.org/jira/browse/AIRFLOW-1061
+        # BASE_URL = configuration.get('webserver', 'BASE_URL')
+
+        return (
             "/admin/airflow/action"
             "?action=success"
             "&task_id={self.task_id}"
