@@ -90,6 +90,7 @@ RUN set -ex \
     && pip install pyOpenSSL \
     && pip install ndg-httpsclient \
     && pip install pyasn1 \
+    && pip install pybrake \
     && pip install /airflow[postgres,s3,datadog,celery,slack,password,crypto,redis] \
     && pip install celery[redis]==4.1.1 \
     && apt-get purge --auto-remove -yqq $buildDeps \

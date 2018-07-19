@@ -13,10 +13,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
+import sys
+
 from airflow import configuration
 from airflow.bin.cli import CLIFactory
 
 if __name__ == '__main__':
+
+    airbrake_project_id = configuration.get('airbrake', 'project_id')
+    airbrake_project_key = configuration.get('airbrake', 'project_key')
+    airbrake_environment = configuration.get('airbrake', 'environment')
+
+    if airbrake_environment and airbrake_project_id and airbrake_project_key:
+        import pybrake
+
+        notifier = pybrake.Notifier(project_id=airbrake_project_id,
+                                    project_key=airbrake_project_key,
+                                    environment=airbrake_environment)
+
+
+        def except_hook(exctype, value, traceback):
+            notifier.notify(value)
+            sys.__excepthook__(exctype, value, traceback)
+
+
+        sys.excepthook = except_hook
 
     if configuration.get("core", "security") == 'kerberos':
         os.environ['KRB5CCNAME'] = configuration.get('kerberos', 'ccache')
