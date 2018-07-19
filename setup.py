@@ -154,6 +154,7 @@ salesforce = ['simple-salesforce>=0.72']
 s3 = [
     'boto>=2.36.0',
     'filechunkio>=1.6',
+    'boto3==1.7.51',
 ]
 samba = ['pysmbclient>=0.1.3']
 slack = ['slackclient>=1.0.0']
