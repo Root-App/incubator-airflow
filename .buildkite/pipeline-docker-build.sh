@@ -6,7 +6,7 @@ git clone ${AIRFLOW_PLUGIN_REPO}
 if [[ "$1" = "dev" ]]; then
   docker build -t ${DEV_ECR_URI}:${BUILDKITE_COMMIT} .
 
-  docker tag ${DEV_ECR_URI}:${BUILDKITE_COMMIT} ${ECR_URI}:${BUILDKITE_BRANCH}
+  docker tag ${DEV_ECR_URI}:${BUILDKITE_COMMIT} ${DEV_ECR_URI}:${BUILDKITE_BRANCH}
 
   docker ${DEV_ECR_URI}:${BUILDKITE_COMMIT}
   docker ${DEV_ECR_URI}:${BUILDKITE_BRANCH}
