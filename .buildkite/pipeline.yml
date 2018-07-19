@@ -1,0 +1,10 @@
+steps:
+  - label: ":docker: build image"
+    command: ".buildkite/pipeline-docker-build.sh dev"
+    agents:
+      queue: "deploy"
+    plugins:
+      ecr#v1.1.2:
+        login: true,
+        no-include-email: true,
+        account_ids: ${AWS_ACCOUNT_IDS}
