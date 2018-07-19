@@ -1,4 +1,9 @@
 steps:
+  - label: ":python: test core"
+    command: "./run_unit_tests.sh tests.core:CoreTest"
+    plugins:
+      docker#v1.4.0:
+        image: "python:3.6.5"
   - label: ":docker: build image"
     command: ".buildkite/pipeline-docker-build.sh dev"
     agents:
