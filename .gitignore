@@ -1,5 +1,6 @@
 # Airflow configuration
 airflow.cfg
+!docker/airflow.cfg
 unittests.cfg
 airflow_login.py
 dbinit.py
