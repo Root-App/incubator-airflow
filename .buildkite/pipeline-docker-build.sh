@@ -1,6 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
+rm -rf $(basename "$AIRFLOW_PLUGIN_REPO" ".${AIRFLOW_PLUGIN_REPO##*.}")
 git clone ${AIRFLOW_PLUGIN_REPO}
 
 if [[ "$1" = "dev" ]]; then
