@@ -9,8 +9,8 @@ if [[ "$1" = "dev" ]]; then
 
   docker tag ${DEV_ECR_URI}:${BUILDKITE_COMMIT} ${DEV_ECR_URI}:${BUILDKITE_BRANCH}
 
-  docker ${DEV_ECR_URI}:${BUILDKITE_COMMIT}
-  docker ${DEV_ECR_URI}:${BUILDKITE_BRANCH}
+  docker push ${DEV_ECR_URI}:${BUILDKITE_COMMIT}
+  docker push ${DEV_ECR_URI}:${BUILDKITE_BRANCH}
 fi
 
 if [[ "$1" = "production" ]]; then
