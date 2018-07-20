@@ -1889,7 +1889,8 @@ class TaskInstance(Base, LoggingMixin):
         """
         Sets the log context.
         """
-        self._set_context(self)
+        # This doesn't exist yet
+        # self._set_context(self)
         self.raw = raw
 
 
