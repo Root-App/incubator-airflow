@@ -62,6 +62,7 @@ _operators = {
     'sqlite_operator': ['SqliteOperator'],
     'mysql_to_hive': ['MySqlToHiveTransfer'],
     'postgres_operator': ['PostgresOperator'],
+    'postgres_to_s3_operator': ['PostgresToS3Operator'],
     'sensors': [
         'BaseSensorOperator',
         'ExternalTaskSensor',
@@ -80,6 +81,7 @@ _operators = {
     'subdag_operator': ['SubDagOperator'],
     'hive_stats_operator': ['HiveStatsCollectionOperator'],
     's3_to_hive_operator': ['S3ToHiveTransfer'],
+    's3_to_postgres_operator': ['S3ToPostgresOperator'],
     'hive_to_mysql': ['HiveToMySqlTransfer'],
     'presto_to_mysql': ['PrestoToMySqlTransfer'],
     's3_file_transform_operator': ['S3FileTransformOperator'],
