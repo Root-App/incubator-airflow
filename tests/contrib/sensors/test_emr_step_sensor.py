@@ -106,13 +106,34 @@ class TestEmrStepSensor(unittest.TestCase):
                 aws_conn_id='aws_default',
             )
 
-            operator.execute(None)
+        mock_emr_session = MagicMock()
+        mock_emr_session.client.return_value = self.emr_client_mock
+
+        # Mock out the emr_client creator
+        self.boto3_session_mock = MagicMock(return_value=mock_emr_session)
+
+    def test_step_completed(self):
+        self.emr_client_mock.describe_step.side_effect = [
+            DESCRIBE_JOB_STEP_RUNNING_RETURN,
+            DESCRIBE_JOB_STEP_COMPLETED_RETURN
+        ]
+
+        with patch('boto3.session.Session', self.boto3_session_mock):
+            self.sensor.execute(None)
+
+            self.assertEqual(self.emr_client_mock.describe_step.call_count, 2)
+            self.emr_client_mock.describe_step.assert_called_with(
+                ClusterId='j-8989898989',
+                StepId='s-VK57YR1Z9Z5N'
+            )
 
             # make sure we called twice
             self.assertEqual(self.mock_emr_client.describe_step.call_count, 2)
 
-            # make sure it was called with the job_flow_id and step_id
-            self.mock_emr_client.describe_step.assert_called_with(ClusterId='j-8989898989', StepId='s-VK57YR1Z9Z5N')
+        self.boto3_client_mock = MagicMock(return_value=self.emr_client_mock)
+
+        with patch('boto3.session.Session', self.boto3_session_mock):
+            self.assertRaises(AirflowException, self.sensor.execute, None)
 
 
 if __name__ == '__main__':

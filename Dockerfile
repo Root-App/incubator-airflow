@@ -91,7 +91,7 @@ RUN set -ex \
     && pip install ndg-httpsclient \
     && pip install pyasn1 \
     && pip install pybrake \
-    && pip install /airflow[postgres,s3,datadog,celery,slack,password,crypto,redis] \
+    && pip install /airflow[postgres,s3,celery,slack,password,crypto,redis] \
     && pip install celery[redis]==4.1.1 \
     && apt-get purge --auto-remove -yqq $buildDeps \
     && apt-get autoremove -yqq --purge \
@@ -107,9 +107,6 @@ RUN set -ex \
 
 COPY docker/entrypoint.sh /entrypoint.sh
 COPY docker/airflow.cfg ${AIRFLOW_HOME}/airflow.cfg
-
-# This is expected to be checked out from git and cloned locally before buiilding
-COPY root-airflow-plugins/root_airflow_plugins ${AIRFLOW_HOME}/plugins
 
 RUN chown -R airflow:airflow ${AIRFLOW_HOME}
 RUN ["chmod", "+x", "/entrypoint.sh"]
