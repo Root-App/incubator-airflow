@@ -86,6 +86,7 @@ _operators = {
     'presto_to_mysql': ['PrestoToMySqlTransfer'],
     's3_file_transform_operator': ['S3FileTransformOperator'],
     'http_operator': ['SimpleHttpOperator'],
+    'http_to_s3_operator': ['HttpToS3Operator'],
     'hive_to_druid': ['HiveToDruidTransfer'],
     'jdbc_operator': ['JdbcOperator'],
     'mssql_operator': ['MsSqlOperator'],

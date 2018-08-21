@@ -16,9 +16,11 @@ class S3ToPostgresOperator(BaseOperator):
                  s3_key,
                  s3_conn_id,
                  table_name,
+                 copy_options=tuple(),
                  *args,
                  **kwargs):
         super().__init__(*args, **kwargs)
+        self.copy_options = copy_options
         self.table_name = table_name
         self.s3_conn_id = s3_conn_id
         self.s3_key = s3_key
@@ -29,10 +31,15 @@ class S3ToPostgresOperator(BaseOperator):
         s3_hook = S3Hook(aws_conn_id=self.s3_conn_id)
         session = s3_hook.get_session()
 
+        if self.copy_options:
+            copy_options = "WITH " + " ".join(self.copy_options)
+        else:
+            copy_options = ""
+
         with smart_open(f's3://{self.s3_bucket}/{self.s3_key}', 'rb', encoding="utf8", s3_session=session) as f:
             target_hook = PostgresHook(postgres_conn_id=self.postgres_conn_id)
             with closing(target_hook.get_conn()) as conn:
                 conn.set_client_encoding("UTF8")
                 with closing(conn.cursor()) as cur:
-                    cur.copy_expert("COPY {} FROM STDIN WITH CSV HEADER".format(self.table_name), f)
+                    cur.copy_expert("COPY {} FROM STDIN {}".format(self.table_name, copy_options), f)
                     conn.commit()
