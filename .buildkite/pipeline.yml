@@ -8,18 +8,18 @@ steps:
     command: ".buildkite/pipeline-docker-build.sh dev"
     agents:
       queue: "deploy"
-    plugins:
-      ecr#v1.1.2:
-        login: true,
-        no-include-email: true,
-        account_ids: ${DEV_AWS_ACCOUNT_ID}
+#    plugins:
+#      ecr#v1.1.2:
+#        login: true,
+#        no-include-email: true,
+#        account_ids: ${DEV_AWS_ACCOUNT_ID}
   - wait
   - label: ":docker: Push Image to Prod"
     command: ".buildkite/pipeline-docker-build.sh production"
     agents:
       queue: "deploy"
-    plugins:
-      ecr#v1.1.2:
-        login: true,
-        no-include-email: true,
-        account_ids: ${PROD_AWS_ACCOUNT_ID}
+#    plugins:
+#      ecr#v1.1.2:
+#        login: true,
+#        no-include-email: true,
+#        account_ids: ${PROD_AWS_ACCOUNT_ID}
