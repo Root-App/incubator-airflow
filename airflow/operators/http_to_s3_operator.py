@@ -40,11 +40,17 @@ class HttpToS3Operator(BaseOperator):
         s3_hook = S3Hook(aws_conn_id=self.s3_conn_id)
         session = s3_hook.get_session()
 
-        with smart_open(f's3://{self.s3_bucket}/{self.s3_key}', 'wb', s3_session=session) as fout:
-            http = HttpHook(method=self.method, http_conn_id=self.http_conn_id)
+        try:
+            with smart_open(f's3://{self.s3_bucket}/{self.s3_key}', 'wb', s3_session=session) as fout:
+                http = HttpHook(method=self.method, http_conn_id=self.http_conn_id)
 
-            self.log.info("Calling HTTP method")
+                self.log.info("Calling HTTP method")
 
-            response = http.run(self.endpoint, self.data, extra_options=self.request_options)
+                response = http.run(self.endpoint, self.data, extra_options=self.request_options)
 
-            fout.write(response.content)
+                fout.write(response.content)
+        except MemoryError as e:
+            # Delete the object so that other processes do not see an existing but empty file
+            if s3_hook.check_for_key(key=self.s3_key, bucket_name=self.s3_bucket):
+                s3_hook.get_conn().delete_object(Bucket=self.s3_bucket, Key=self.s3_key)
+            raise e

@@ -4,12 +4,12 @@ steps:
 #    plugins:
 #      docker#v1.4.0:
 #        image: "python:3.6.5"
-  - label: ":docker: build image"
+  - label: ":docker: Build Image and Push to Dev"
     command: ".buildkite/pipeline-docker-build.sh dev"
     agents:
       queue: "deploy"
-    plugins:
-      ecr#v1.1.2:
-        login: true,
-        no-include-email: true,
-        account_ids: ${AWS_ACCOUNT_IDS}
+  - wait
+  - label: ":docker: Push Image to Prod"
+    command: ".buildkite/pipeline-docker-build.sh production"
+    agents:
+      queue: "deploy"
