@@ -10,8 +10,8 @@ steps:
       queue: "deploy"
     plugins:
       ecr#v1.1.2:
-        login: true
-        no-include-email: true
+        login: true,
+        no-include-email: true,
         account_ids: ${DEV_AWS_ACCOUNT_ID}
   - wait
   - label: ":docker: Push Image to Prod"
@@ -20,6 +20,6 @@ steps:
       queue: "deploy"
     plugins:
       ecr#v1.1.2:
-        login: true
-        no-include-email: true
+        login: true,
+        no-include-email: true,
         account_ids: ${PROD_AWS_ACCOUNT_ID}
