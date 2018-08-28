@@ -1,0 +1,15 @@
+steps:
+#  - label: ":python: test core"
+#    command: "pip install -e '.[s3,crypto,password,postgres,slack,redis,celery,devel]' && nosetests tests.core:CoreTest"
+#    plugins:
+#      docker#v1.4.0:
+#        image: "python:3.6.5"
+  - label: ":docker: Build Image and Push to Dev"
+    command: ".buildkite/pipeline-docker-build.sh dev"
+    agents:
+      queue: "deploy"
+  - wait
+  - label: ":docker: Push Image to Prod"
+    command: ".buildkite/pipeline-docker-build.sh production"
+    agents:
+      queue: "deploy"
