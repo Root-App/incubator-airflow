@@ -16,6 +16,8 @@
 import setproctitle
 from airflow import settings
 
+forwarded_allow_ips = "*"
+
 
 def post_worker_init(dummy_worker):
     setproctitle.setproctitle(

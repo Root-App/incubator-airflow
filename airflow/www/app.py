@@ -38,9 +38,14 @@ def create_app(config=None, testing=False):
             self.app = app
 
         def __call__(self, environ, start_response):
+            print("##### __CALL__ #####")
+            print(environ)
+            print(start_response)
             scheme = environ.get('HTTP_X_FORWARDED_PROTO')
+            print(scheme)
             if scheme:
                 environ['wsgi.url_scheme'] = scheme
+            print("##### __END_CALL__ #####")
             return self.app(environ, start_response)
 
     app = Flask(__name__)
