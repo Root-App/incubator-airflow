@@ -1,9 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-# LEGAL-362
-export SLUGIFY_USES_TEXT_UNIDECODE=yes
-
 if [[ "$1" = "dev" ]]; then
   docker build -t ${DEV_ECR_URI}:${BUILDKITE_COMMIT} .
 

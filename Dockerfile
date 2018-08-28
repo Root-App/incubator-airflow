@@ -22,6 +22,10 @@ ENV LC_ALL en_US.UTF-8
 ENV LC_CTYPE en_US.UTF-8
 ENV LC_MESSAGES en_US.UTF-8
 
+# Airflow LEGAL-362
+ENV SLUGIFY_USES_TEXT_UNIDECODE yes
+
+
 # grab gosu for easy step-down from root
 ENV GOSU_VERSION 1.10
 RUN set -x \
