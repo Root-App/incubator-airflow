@@ -87,7 +87,6 @@ RUN set -ex \
     && touch ${AIRFLOW_HOME}/dags/system_dags/__init__.py \
     && touch ${AIRFLOW_HOME}/config/__init__.py \
     && cp -r /airflow//docker/deploy_dags.py ${AIRFLOW_HOME}/dags/system_dags \
-    && cp -r /airflow//docker/webserver_config.py ${AIRFLOW_HOME}/webserver_config.py \
     && pip install -U pip setuptools wheel \
     && pip install Cython \
     && pip install pytz \
@@ -109,7 +108,9 @@ RUN set -ex \
         /usr/share/doc-base \
         /airflow
 
+RUN airflow version
 COPY docker/entrypoint.sh /entrypoint.sh
+COPY docker/webserver_config.py ${AIRFLOW_HOME}/webserver_config.py
 
 RUN chown -R airflow:airflow ${AIRFLOW_HOME}
 RUN ["chmod", "+x", "/entrypoint.sh"]

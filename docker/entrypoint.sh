@@ -71,7 +71,7 @@ chown -R airflow:airflow "/usr/local/airflow"
 
 case "$1" in
   webserver)
-    airflow initdb
+    gosu airflow initdb
     if [ "$AIRFLOW__CORE__EXECUTOR" != "CeleryExecutor" ]; then
       # With the "Local" executor it should all run in one container.
       gosu airflow bash -c "airflow scheduler &"
