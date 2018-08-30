@@ -78,6 +78,7 @@ RUN set -ex \
     && groupadd -g 5014 airflow \
     && useradd -u 5014 -g 5014 -ms /bin/bash -d ${AIRFLOW_HOME} airflow \
     && mkdir -p ${AIRFLOW_HOME}/.ssh \
+    && mkdir -p ${AIRFLOW_HOME}/.git \
     && mkdir -p ${AIRFLOW_HOME}/dags \
     && mkdir -p ${AIRFLOW_HOME}/dags/user_dags \
     && mkdir -p ${AIRFLOW_HOME}/dags/system_dags \
@@ -86,7 +87,8 @@ RUN set -ex \
     && touch ${AIRFLOW_HOME}/dags/user_dags/__init__.py \
     && touch ${AIRFLOW_HOME}/dags/system_dags/__init__.py \
     && touch ${AIRFLOW_HOME}/config/__init__.py \
-    && cp -r /airflow//docker/deploy_dags.py ${AIRFLOW_HOME}/dags/system_dags \
+    && cp /airflow/docker/deploy_dags.py ${AIRFLOW_HOME}/dags/system_dags \
+    && cp /airflow/.git/HEAD ${AIRFLOW_HOME}/.git/HEAD \
     && pip install -U pip setuptools wheel \
     && pip install Cython \
     && pip install pytz \
