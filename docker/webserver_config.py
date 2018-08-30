@@ -46,7 +46,7 @@ CSRF_ENABLED = True
 # 2 - AUTH_LDAP : Is for LDAP
 # 3 - AUTH_REMOTE_USER : Is for using REMOTE_USER from web server
 # 4 - AUTH_OAUTH : Is for OAuth
-AUTH_TYPE = os.environ.get("AIRFLOW__WEBSERVER__AUTH_TYPE", 1)
+AUTH_TYPE = int(os.environ.get("AIRFLOW__WEBSERVER__AUTH_TYPE", 1))
 
 # Uncomment to setup Full admin role name
 # AUTH_ROLE_ADMIN = 'Admin'
