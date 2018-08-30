@@ -41,12 +41,12 @@ CSRF_ENABLED = True
 # for details.
 
 # The authentication type
-# AUTH_OID : Is for OpenID
-# AUTH_DB : Is for database
-# AUTH_LDAP : Is for LDAP
-# AUTH_REMOTE_USER : Is for using REMOTE_USER from web server
-# AUTH_OAUTH : Is for OAuth
-AUTH_TYPE = AUTH_OAUTH
+# 0 - AUTH_OID : Is for OpenID
+# 1 - AUTH_DB : Is for database
+# 2 - AUTH_LDAP : Is for LDAP
+# 3 - AUTH_REMOTE_USER : Is for using REMOTE_USER from web server
+# 4 - AUTH_OAUTH : Is for OAuth
+AUTH_TYPE = os.environ.get("AIRFLOW__WEBSERVER__AUTH_TYPE", 1)
 
 # Uncomment to setup Full admin role name
 # AUTH_ROLE_ADMIN = 'Admin'
